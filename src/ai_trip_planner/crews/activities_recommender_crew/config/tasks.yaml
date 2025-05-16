@@ -1,0 +1,65 @@
+find_cities:
+  description: >
+    Analyze and select the best city for the trip based 
+    on specific criteria such as weather patterns, seasonal
+    events, and travel costs. This task involves comparing
+    multiple cities, considering factors like current weather
+    conditions, upcoming cultural or seasonal events, duration of the trip and
+    overall travel expenses. 
+                
+    Your final answer must be a detailed
+    report on the chosen city, and everything you found out
+    about it, including the actual flight costs, weather 
+    forecast, attractions, events and activities.
+    You can use internet search to help you. 
+    When using a tool, always pass queries using this format:
+    {"search_query": "your search here"}
+
+    Here is the user profile:\n\n {userprofile}
+    Here is the users trip details: \n\n {tripdetails}
+  expected_output: >
+    Detailed report on the chosen city including flight costs, weather forecast, attractions, events and activities.
+  agent: city_selector
+
+find_places:
+  description: >
+    As a local expert on this city you must compile an 
+    in-depth guide for someone traveling there and wanting 
+    to have THE BEST trip ever!
+    Gather information about key attractions, local customs,
+    special events, and daily activity recommendations.
+    Find the best spots to go to, the kind of place only a
+    local would know.
+    you should provide a thorough overview of what 
+    the city has to offer, including hidden gems, cultural
+    hotspots, must-visit landmarks, weather forecasts, and
+    high level costs alligning with the user profile and preferences.
+    If you use a tool, always structure your tool input as:
+    {"search_query": "your search here"}            
+    The final answer must be a comprehensive city guide, 
+    rich in cultural insights and practical tips, 
+    tailored to enhance the travel experience.
+    Here is the user profile:\n\n {userprofile}
+    Here is the users trip details: \n\n {tripdetails}
+  expected_output: >
+    Comprehensive city guide including hidden gems, cultural hotspots, and practical travel tips
+  agent: local_expert
+
+
+make_recommendations:
+  description: >
+    Create a range of list to recommend the user to select, including places, activities, events
+    weather forecasts, prices that fits best with the users desires and budget.
+                
+    You MUST suggest actual places, events to visit, and actual activities to explore.           
+                
+    your final answer MUST give a reason why you picked
+    each place, event and activities, what makes them special!
+    If you use a tool, always structure your tool input as:
+    {"search_query": "your search here"}
+    Here is the user profile:\n\n {userprofile}
+    Here is the users trip details: \n\n {tripdetails}
+    Provide the list of informations in the following outline: \n\n {activities_outline}
+  expected_output: >
+    Recommending the user with a range of places, events and activities \n\n {activities_outline}
+  agent: activities_recommender

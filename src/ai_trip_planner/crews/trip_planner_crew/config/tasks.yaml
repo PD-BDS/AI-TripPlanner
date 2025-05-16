@@ -1,0 +1,45 @@
+gathering_info_activities:
+  description: >
+    based on the user's selected activities, 
+    create a detailed activities guide by analysing the location distance of each activity and 
+    group the nearby activities weather conditions, activities details,  Locations, places to eat, expense breakdown, 
+    travel tips, and any additional important information or speacial notes for effiecient travelling. 
+                
+    This report should cover all aspects of the selected activities. 
+                
+    your final answer MUST be a complete expanded travel activities report,
+    formatted as markdown, anticipated weather conditions, locations of activities, grouping the nearby activities together for efficiency,
+    recommended clothing and
+    items to pack, and a detailed budget, ensuring THE BEST
+    TRIP EVER. 
+    Here is the user profile:\n\n {userprofile}
+    Here is the users trip details: \n\n {tripdetails}
+    Here is the users selected activities: \n\n {user_selected_activities}
+  expected_output: >
+    Complete expanded travel activities guide with weather conditions, activities details, locations, grouping nearby activities, 
+    packing suggestions, and budget breakdown Formatted as markdown.
+  agent: travel_planner
+
+
+planning_trip:
+  description: >
+    based on the Travel activities guide by the travel_activities_expert agent, create a detailed day wise travel 
+    itinerary including activities grouped based on location, weather forecasts, places to eat, clothing suggestions, 
+    budget breakdown and any any additional important information or speacial notes for effiecient travelling, maintaing effieciency
+    in the following outline: \n\n {plan_outline}, 
+                
+    This itinerary should cover all aspects of the trip, 
+    from arrival to departure, integrating the activities guide
+    information with practical travel logistics. Ensure the day wise plan is designed in such way that traveller can do 
+    activities of nearby places in the same day, so that they dont have to go to the same place multiple times wasting their time and energy.  
+                
+    your final answer MUST be a complete expanded travel plan,
+    formatted as markdown, encompassing a daily schedule,
+    anticipated weather conditions, recommended clothing and
+    items to pack, and a detailed budget, ensuring THE BEST
+    TRIP EVER. be specific in every details.
+    Here is the user profile:\n\n {userprofile}
+    Here is the users trip details: \n\n {tripdetails}
+  expected_output: >
+    Complete expanded travel plan with daily schedule, weather conditions, packing suggestions, and budget breakdown Formatted as markdown without '```'
+  agent: travel_planner
