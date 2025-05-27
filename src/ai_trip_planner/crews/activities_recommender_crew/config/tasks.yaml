@@ -1,6 +1,6 @@
 find_cities:
   description: >
-    Analyze and select the best city for the trip based 
+    Analyze and select the best cities for the trip based 
     on specific criteria such as weather patterns, seasonal
     events, and travel costs. This task involves comparing
     multiple cities, considering factors like current weather
@@ -8,10 +8,11 @@ find_cities:
     overall travel expenses. 
                 
     Your final answer must be a detailed
-    report on the chosen city, and everything you found out
+    report on the chosen cities, and everything you found out
     about it, including the actual flight costs, weather 
-    forecast, attractions, events and activities.
-    You can use internet search to help you. 
+    forecast, key attractions and must visit places, events and activities.
+    You can use internet search to help you.
+    always convert the expenses in Euro currency.
     When using a tool, always pass queries using this format:
     {"search_query": "your search here"}
 
@@ -31,9 +32,11 @@ find_places:
     Find the best spots to go to, the kind of place only a
     local would know.
     you should provide a thorough overview of what 
-    the city has to offer, including hidden gems, cultural
-    hotspots, must-visit landmarks, weather forecasts, and
+    the city has to offer, including hidden gems (like far side beaches, mountains and natural landscapes),
+    natural sites like beaches, mountains,
+    cultural hotspots, must-visit landmarks, weather forecasts, and
     high level costs alligning with the user profile and preferences.
+    You should find no less than 20 places and activities.
     If you use a tool, always structure your tool input as:
     {"search_query": "your search here"}            
     The final answer must be a comprehensive city guide, 
@@ -51,7 +54,8 @@ make_recommendations:
     Create a range of list to recommend the user to select, including places, activities, events
     weather forecasts, prices that fits best with the users desires and budget.
                 
-    You MUST suggest actual places, events to visit, and actual activities to explore.           
+    You MUST suggest actual places, events to visit, and actual activities to explore and it should not be less than 20 in number
+    so the user has more options to decide.           
                 
     your final answer MUST give a reason why you picked
     each place, event and activities, what makes them special!
@@ -60,6 +64,8 @@ make_recommendations:
     Here is the user profile:\n\n {userprofile}
     Here is the users trip details: \n\n {tripdetails}
     Provide the list of informations in the following outline: \n\n {activities_outline}
+    in the short_description give a brief information about the place and reason behind why it matches with the user.
+    provide the rating as like the following format "0.0 out of 5.0"
   expected_output: >
     Recommending the user with a range of places, events and activities \n\n {activities_outline}
   agent: activities_recommender

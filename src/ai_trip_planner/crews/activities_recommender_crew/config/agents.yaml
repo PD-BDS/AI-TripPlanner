@@ -2,7 +2,7 @@ city_selector:
   role: >
     City Selection Expert
   goal: >
-    Research on the travel destinations and select the best cities based on weather, season, activities, duration of the trip and prices alligning with the users need.
+    Research on the travel destinations, compare between cities and select the best cities based on weather, season, activities, duration of the trip and prices alligning with the users need.
     
     Here is the user profile:\n\n {userprofile}
     Here is the users trip details: \n\n {tripdetails}

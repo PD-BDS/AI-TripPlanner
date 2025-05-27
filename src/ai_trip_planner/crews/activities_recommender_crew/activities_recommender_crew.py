@@ -3,7 +3,7 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
 from langchain_openai import ChatOpenAI
 
-from ...type import ActivitesOutline
+from type import ActivitiesList
 
 search_tool = SerperDevTool()
 
@@ -60,7 +60,7 @@ class ActivitiesRecommender():
     @task
     def make_recommendations(self) -> Task:
         return Task(
-            config=self.tasks_config['make_recommendations'], output_pydantic= ActivitesOutline
+            config=self.tasks_config['make_recommendations'], output_pydantic= ActivitiesList
         )
     
     @crew

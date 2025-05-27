@@ -30,14 +30,19 @@ class ActivitesOutline(BaseModel):
     location: str
     approximate_expense: str
     recommendation_rating: str
-
+    
+class ActivitiesList(BaseModel):
+    activities: List[ActivitesOutline]
 
 class UserSelectionOutline(BaseModel):
     selected: List[ActivitesOutline]
 
-
 class PlanOutline(BaseModel):
     day_wise_plan: str
     weather_condition: str
+    packing_and_clothing_tips: str
     expense_breakdown: str
     special_notes: str
+
+class TripPlan(BaseModel):
+    plan: List[PlanOutline]

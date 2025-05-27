@@ -1,7 +1,7 @@
 # app.py
 import asyncio
 import streamlit as st
-from type import UserProfile, TripDetails, ActivitesOutline, UserSelectionOutline
+from type import UserProfile, TripDetails, ActivitesOutline, ActivitiesList, UserSelectionOutline, PlanOutline, TripPlan
 from main import generate_recommendations, generate_plan
 #from main import TripPlanFlow, TripPlanState
 
@@ -34,6 +34,15 @@ with st.form("user_form"):
 
     submitted = st.form_submit_button("Generate Recommendations")
 
+if 'user' not in st.session_state:
+    st.session_state.user = None
+
+if 'trip' not in st.session_state:
+    st.session_state.trip = None
+
+if 'recommendations' not in st.session_state:
+    st.session_state.recommendations = []
+
 if submitted:
     user = UserProfile(
         name=name,
@@ -58,36 +67,64 @@ if submitted:
         preferences=preferences,
         special_requirements=special_requirements or None
     )
+    
+    st.session_state.user = user
+    st.session_state.trip = trip
 
     with st.spinner("Generating travel recommendations..."):
-            recommendations = generate_recommendations(user, trip)
+        recommendations = generate_recommendations(user, trip)
+        st.session_state.recommendations = recommendations
 
+# ✅ Display activity checkboxes with cards
+if st.session_state.recommendations:
     st.subheader("🎯 Activity Recommendations")
     st.markdown("Please review and select the activities you want to include in your final itinerary:")
 
     selected_activities = []
-    for activity in recommendations:
-        if isinstance(activity, dict):
-            title = activity.get("title", "Untitled")
-            location = activity.get("location", "Unknown")
-            if st.checkbox(f"{title} - {location}", value=True):
-                selected_activities.append(ActivitesOutline(**activity))
-        elif isinstance(activity, ActivitesOutline):
-            if st.checkbox(f"{activity.title} - {activity.location}", value=True):
+
+    for i, activity in enumerate(st.session_state.recommendations):
+        if isinstance(activity, ActivitesOutline):
+            cols = st.columns([0.1, 0.9])
+            with cols[0]:
+                checked = st.checkbox("Select", key=f"activity_{i}", label_visibility="collapsed")
+            with cols[1]:
+                st.markdown(
+                    f"""
+                    <div style='padding: 10px; background-color: #f9f9f9; border-radius: 10px;
+                                border: 1px solid #ddd; margin-bottom: 10px;'>
+                        <b>{activity.title}</b><br>
+                        {activity.short_description}<br>
+                        <b>📍 Location:</b> {activity.location}<br>
+                        <b>💸 Cost:</b> {activity.approximate_expense}<br>
+                        <b>⭐ Rating:</b> {activity.recommendation_rating}
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+            if checked:
                 selected_activities.append(activity)
-        else:
-            st.warning("⚠️ Skipping unrecognized activity format.")
 
+    # Final trip plan generation
     if st.button("Generate Final Trip Plan"):
-        outline = UserSelectionOutline(selected=selected_activities)
-        with st.spinner("Building your personalized itinerary..."):
-            final_plan = generate_plan(user, trip, outline)
+        if not selected_activities:
+            st.warning("Please select at least one activity before generating the plan.")
+        else:
+            outline = [a.model_dump() for a in selected_activities]
 
-        st.subheader("🗓️ Final Itinerary")
-        st.markdown(final_plan["day_wise_plan"])
-        st.markdown("### 🌤️ Weather Forecast")
-        st.markdown(final_plan["weather_condition"])
-        st.markdown("### 💰 Expense Breakdown")
-        st.markdown(final_plan["expense_breakdown"])
-        st.markdown("### 📌 Special Notes")
-        st.markdown(final_plan["special_notes"])
+            user = st.session_state.get("user")
+            trip = st.session_state.get("trip")
+
+            if not user or not trip:
+                st.error("User or Trip information is missing. Please fill out the form again.")
+            else:
+                with st.spinner("Building your personalized itinerary..."):
+                    trip_plan = generate_plan(user, trip, outline)
+
+                st.subheader("🗓️ Detailed Plan")
+                for i, plan in enumerate(trip_plan):
+                    st.markdown(f"\n\n{plan.day_wise_plan}")
+                    st.markdown(f"**🌦️ Weather:**\n\n{plan.weather_condition}")
+                    st.markdown(f"**🎒 Packing Tips:**\n\n{plan.packing_and_clothing_tips}")
+                    st.markdown(f"**💰 Expenses:**\n\n{plan.expense_breakdown}")
+                    st.markdown(f"**📝 Notes:**\n\n{plan.special_notes}")
+                    st.markdown("---")

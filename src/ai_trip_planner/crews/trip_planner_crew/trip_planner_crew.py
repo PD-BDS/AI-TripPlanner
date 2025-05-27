@@ -2,7 +2,7 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
 from langchain_openai import ChatOpenAI
-from ...type import PlanOutline
+from type import PlanOutline, TripPlan
 
 search_tool = SerperDevTool()
 
@@ -43,7 +43,7 @@ class TripPlanner():
     @task
     def planning_trip(self) -> Task:
         return Task(
-            config=self.tasks_config['planning_trip'], output_pydantic= PlanOutline
+            config=self.tasks_config['planning_trip'], output_pydantic= TripPlan
         )
     
     @crew
