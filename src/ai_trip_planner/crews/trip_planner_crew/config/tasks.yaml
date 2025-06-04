@@ -1,0 +1,45 @@
+gathering_info_activities:
+  description: >
+    based on the user's selected activities, create a detailed activities guide by analysing the location distance of each activity and 
+    group the nearby activities based on latitude and longitude calculation, weather conditions, activities details,  Locations, 
+    places to eat, expense breakdown, travel tips, and any additional important information or speacial notes for effiecient travelling. 
+    You will use nearby_search_tool for searching hotels and restaurants nearby the selected activities. Then suggest best hotels and 
+    restaurants based on the user and trip preferences.
+
+    This report should cover all aspects of the selected activities so that the Travel Itinerary Planning Agent 
+    can prepare the detailed plan in this format:\n\n {plan_outline}. 
+           
+    your final answer MUST be a complete expanded travel activities report, formatted as markdown, anticipated weather conditions,
+    locations of activities, grouping the nearby activities based on latitude and longitude calculation together for efficiency,
+    recommended hotel, restaurant, clothing and items to pack, and a detailed budget, ensuring THE BEST TRIP EVER. 
+    If you use a tool, always structure your tool input as:
+    {"search_query": "your search here"}
+    
+    Here is the user profile:\n\n {userprofile}
+    Here is the users trip details: \n\n {tripdetails}
+    Here is the users selected activities: \n\n {selected_activities}
+  expected_output: >
+    Complete expanded travel activities guide with weather conditions, activities details, locations, grouping nearby activities
+    by calculating latitude and longitude, packing suggestions, and budget breakdown Formatted as markdown.
+  agent: travel_activities_expert
+
+
+planning_trip:
+  description: >
+    based on the Travel activities guide by the travel_activities_expert agent, create a detailed day wise travel itinerary for the whole 
+    duration of the trip with hourly breakdown in the following outline: \n\n {plan_outline}, 
+                
+    This itinerary should cover all aspects of the trip, from arrival to departure,integrating the activities guide information 
+    with practical travel logistics. read carefully the from date and to date in {tripdetails}, to Ensure you create the day wise
+    plan for the whole duration of the trip.Design the plan in such way that traveller can do activities of nearby places
+    first and then move to the other places, so that they dont have to go to the same place multiple times wasting their time and energy.  
+          
+    your final answer MUST be a complete detailed expanded travel plan,
+    formatted as markdown, encompassing a daily itinerary ( which will contain very detailed hourly breakdown of each day of the trip),
+    anticipated weather conditions, recommended hotels, restaurants, clothing and items to pack, and a detailed budget breakdown (in Euro),
+    ensuring THE BEST TRIP EVER. be specific and accurate in every details.
+    Here is the user profile:\n\n {userprofile}
+    Here is the users trip details: \n\n {tripdetails}
+  expected_output: >
+    Complete expanded deatiled travel plan with daily schedule, weather conditions, packing suggestions, and budget breakdown Formatted as markdown without '```'
+  agent: travel_planner

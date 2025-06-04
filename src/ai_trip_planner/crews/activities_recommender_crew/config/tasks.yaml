@@ -1,0 +1,41 @@
+find_places:
+  description: >
+    you are a tourism city expert in finding out places for tourist tailored to their personal and travel preferences based on
+    criteria such as weather patterns, seasonal events, and travel costs. you provide best places and activities to visit in any 
+    city.
+                
+    Your final answer must be a detailed
+    report on the tourist attractions in the cities, and everything you found out about it, including weather forecast,
+    key attractions and must visit places, events and activities. You will use location_search_tool for searching attractions
+    of the cities, use nearby_search_tool for finding more places nearby. after getting all the details of each places then use search_tool for futher research to help you gather more 
+    information about the places. When using a tool, always pass queries using this format:
+    {"search_query": "your search here"}
+
+    Here is the user profile:\n\n {userprofile}
+    Here is the users trip details: \n\n {tripdetails}
+  expected_output: >
+    Detailed report on the chosen city including weather forecast, attractions, events and activities.
+  agent: city_expert
+
+
+make_recommendations:
+  description: >
+    research and analyse on each places the city_expert agent has provided you. and then Create a range of list to recommend 
+    the user to select, including places, activities, events weather forecasts, prices that fits best with the users desires and budget.
+                
+    You MUST suggest actual places, events to visit, and actual activities to explore and it should not be less than 20 in number
+    so the user has more options to decide.           
+                
+    your final answer MUST give a reason in the short descriptions field, describing why you picked
+    each place, event and activities, what makes them special!
+    If you use a tool, always structure your tool input as:
+    {"search_query": "your search here"}
+
+    Here is the user profile:\n\n {userprofile}
+    Here is the users trip details: \n\n {tripdetails}
+    Provide the list of detailed informations in the following outline: \n\n {activities_outline}
+    provide the address in details.
+    provide the rating as like the following format "0.0 out of 5.0"
+  expected_output: >
+    Recommending the user with a range of places, events and activities \n\n {activities_outline}
+  agent: activities_recommender
