@@ -7,12 +7,19 @@ A fully modular AI-powered travel planner built using **CrewAI** and **Streamlit
 ## ✨ Features
 
 ✅ User Profile & Trip Preferences Input via Streamlit
+
 ✅ Modular CrewAI Architecture (2 Crews)
+
 ✅ Personalized Activity Recommendations
+
 ✅ Interactive Activity Selection
+
 ✅ Day-wise Optimized Itinerary Generation
+
 ✅ Weather, Budget & Travel Tips Included
+
 ✅ Integrated with Serper and TripAdvisor APIs
+
 ✅ Expandable Agent & Tool System
 
 ---
